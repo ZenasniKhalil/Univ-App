@@ -1,0 +1,56 @@
+{% extends 'index.html' %} {% block content %}
+<div class="card shadow mb-4">
+  <!-- Card Header - Accordion -->
+  <a
+    href="#collapseCardExample"
+    class="d-block card-header py-3"
+    data-toggle="collapse"
+    role="button"
+    aria-expanded="true"
+    aria-controls="collapseCardExample"
+  >
+    <h6 class="m-0 font-weight-bold text-primary">
+      Ajouter une list d'etudiant avec excel
+    </h6>
+  </a>
+  <!-- Card Content - Collapse -->
+  <div class="collapse show" id="collapseCardExample">
+    <div class="card-body">
+      <form
+        action=""
+        method="post"
+        enctype="multipart/form-data"
+        id="add_student_form"
+      >
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Upload</span>
+          </div>
+          <div class="custom-file">
+            <input
+              type="file"
+              class="custom-file-input"
+              id="inputGroupFile01"
+              name="myfile"
+            />
+            <label class="custom-file-label" for="inputGroupFile01"
+              >Choisir le fichier</label
+            >
+          </div>
+        </div>
+        <center>
+          <!-- <a
+            href=""
+            class="btn btn-success btn-circle btn-lg"
+            onclick="document.getElementById('add_student_form').submit()"
+          >
+            <i class="fas fa-plus"></i>
+          </a> -->
+          <input type="submit" value="submit" />
+        </center>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
