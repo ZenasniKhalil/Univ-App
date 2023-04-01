@@ -1,13 +1,29 @@
 from django.shortcuts import render,redirect
 from .importExcel import importExcel 
-from .models import Etudiant
+from .models import Etudiant,Verifier, Domaine, Filiere
 from django.contrib import messages
-from .forms import FilterForm
-from django.db.models import Q
-from .filters import EtudiantFilter
+from .forms import DomaineForm, FiliereForm
+from .filters import EtudiantFilter, VerifierFilter
+from django.db import IntegrityError
+
+def dashboard(request):
+    table_header = ['Mat. Etudiant',
+                    'Nom',
+                    'Prénom',
+                    'Date de naiss.',
+                    'Code domaine',
+                    'Code filière',
+                    'Code niveau',
+                    'Date de l\'examen',
+                    'Heure de l\'examen']
+    records = VerifierFilter(request.GET, queryset=Verifier.objects.all())
+    context={
+        'records':records,
+        'header':table_header
+    }
+    return render(request, 'base/records.html', context)
 
 def student(request):
-    # filter_form = FilterForm()
     table_header = ['Mat. Etudiant',
                     'Nom',
                     'Prénom',
@@ -15,44 +31,6 @@ def student(request):
                     'Code domaine',
                     'Code filière',
                     'Code niveau']
-    # if request.GET.get('mat') != None:
-    #     mat=request.GET.get('mat')
-    # else:
-    #     mat=''
-    # if request.GET.get('nom') != None:
-    #     nom=request.GET.get('nom')
-    # else:
-    #     nom=''
-    # if request.GET.get('prenom') != None:
-    #     prenom=request.GET.get('prenom')
-    # else:
-    #     prenom=''
-    # if request.GET.get('date_de_naissance') != None:
-    #     date_de_naissance=request.GET.get('date_de_naissance')
-    # else:
-    #     date_de_naissance=''
-    # if request.GET.get('domaine') != None:
-    #     domaine=request.GET.get('domaine')
-    # else:
-    #     domaine=''
-    # if request.GET.get('filiere') != None:
-    #     filiere=request.GET.get('filiere')
-    # else:
-    #     filiere=''
-    # if request.GET.get('niveau') != None:
-    #     niveau=request.GET.get('niveau')
-    # else:
-    #     niveau=''
-    # print(date_de_naissance)
-    # students = Etudiant.objects.filter(
-    #     mat__contains=mat,
-    #     nom__contains=nom,
-    #     prenom__contains=prenom,
-    #     domaine__code__contains=domaine,
-    #     niveau__contains=niveau,
-    #     date_de_naissance__contains=date_de_naissance,
-    #     filiere__code__contains=filiere
-    # )
     students = EtudiantFilter(request.GET, queryset=Etudiant.objects.all())
     context = {
         'students':students,
@@ -77,6 +55,24 @@ def deleteStudents(request):
         Etudiant.objects.all().delete()
         return redirect('base:student')
     return render(request, 'base/sup_etudiants.html')
+
+
+def addDomaine(request):
+    form = DomaineForm()
+    if request.method == 'POST':
+        try:
+            Domaine.objects.create(
+                code=request.POST.get('code'),
+                nom=request.POST.get('nom')
+            )
+            return redirect('base:dashboard')
+        except IntegrityError as e:
+            messages.error(request, 'Le Code <strong>'+str(request.POST.get('code'))+'</strong> est deja existant !!!')
+        
+    context={
+        'form':form
+    }
+    return render(request, 'base/domaine.html',context)
 
 
 

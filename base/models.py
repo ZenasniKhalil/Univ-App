@@ -31,3 +31,10 @@ class Etudiant(models.Model):
     niveau = models.CharField(max_length=20, choices=niveaux, blank=True)
     def __str__(self): 
         return self.mat
+
+
+
+class Verifier(models.Model):
+    etudiant = models.ForeignKey(Etudiant, on_delete=models.CASCADE)
+    date = models.DateField(auto_now=True)
+    temp = models.TimeField(auto_now=True)

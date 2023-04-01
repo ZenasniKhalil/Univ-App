@@ -24,7 +24,7 @@
     <div class="card-header">Filter</div>
   </center>
   <div class="card-body">
-    <form action="" method="get">
+    <form action="#the_list" method="get">
       <div class="row">
         <div class="col">
           <label for="">Matricule:</label>
@@ -80,7 +80,7 @@
   </div>
 </div>
 
-<div class="card shadow mb-4">
+<div class="card shadow mb-4" id="the_list">
   <div class="card-header py-3">
     <center>
       <h6 class="m-0 font-weight-bold text-primary">Tout Les Étudiant</h6>
@@ -153,7 +153,7 @@
         </div>
       </div> -->
       <table
-        class="table table-bordered"
+        class="table table-bordered table-striped"
         id="dataTable"
         width="100%"
         cellspacing="0"
@@ -165,20 +165,13 @@
             {% endfor %}
           </tr>
         </thead>
-        <tfoot>
-          <tr>
-            {% for head in header %}
-            <th>{{head}}</th>
-            {% endfor %}
-          </tr>
-        </tfoot>
         <tbody>
           {% for student in students.qs %}
           <tr>
             <td>{{student.mat}}</td>
             <td>{{student.nom}}</td>
             <td>{{student.prenom}}</td>
-            <td>{{student.date_de_naissance}}</td>
+            <td>{{student.date_de_naissance|date:'d/m/Y'}}</td>
             <td>{{student.domaine}}</td>
             <td>{{student.filiere}}</td>
             <td>{{student.niveau}}</td>

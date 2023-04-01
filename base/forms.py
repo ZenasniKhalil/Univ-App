@@ -1,13 +1,13 @@
-from .models import Etudiant
+from .models import Etudiant, Domaine, Filiere
 from django.forms import ModelForm
 from django import forms
 
-class FilterForm(ModelForm):
+class DomaineForm(ModelForm):
     class Meta:
-        model = Etudiant
+        model = Domaine
         fields = '__all__'
-        widgets={
-            'niveau':forms.Select(attrs={'class':'form-control'}),
-            'domaine':forms.Select(attrs={'class':'form-control'}),
-            'filiere':forms.Select(attrs={'class':'form-control'}),
-        }
+
+class FiliereForm(ModelForm):
+    class Meta:
+        model = Filiere
+        fields = '__all__'
