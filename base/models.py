@@ -26,8 +26,8 @@ class Etudiant(models.Model):
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
     date_de_naissance = models.DateField()
-    domaine = models.ForeignKey(Domaine, on_delete=models.PROTECT)
-    filiere = models.ForeignKey(Filiere, on_delete=models.PROTECT)
-    niveau = models.CharField(max_length=20, choices=niveaux)
-    def __str__(self):
+    domaine = models.ForeignKey(Domaine, on_delete=models.PROTECT, blank=True)
+    filiere = models.ForeignKey(Filiere, on_delete=models.PROTECT, blank=True)
+    niveau = models.CharField(max_length=20, choices=niveaux, blank=True)
+    def __str__(self): 
         return self.mat

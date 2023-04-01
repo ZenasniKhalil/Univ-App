@@ -1,8 +1,10 @@
 from .models import Etudiant, Domaine, Filiere
 import pandas as pd
 from datetime import datetime
+from django.db import IntegrityError
+from django.contrib import messages
 
-def importExcel(myfile):       
+def importExcel(request,myfile):       
     dbframe = pd.read_excel(myfile)
     if list(dbframe.columns) == ['Mat. Etudiant',
                                  'Nom',
@@ -11,6 +13,7 @@ def importExcel(myfile):
                                  'Code domaine',
                                  'Code filière',
                                  'Code niveau']:
+        student_number = 0;
         for dbframe in dbframe.itertuples():
             domaine_instance = Domaine.objects.get(code=dbframe[5])
             filiere_instance = Filiere.objects.get(code=dbframe[6])
@@ -26,8 +29,15 @@ def importExcel(myfile):
                     niveau=dbframe[7]
                 )           
                 obj.save()
-            except:
+                student_number+=1;
+            except IntegrityError as e:
                 pass
+            # exception for missing value
+        messages.success(request, str(student_number)+' étudiants sont ajoutés ')
+        # this variable for redirection in views page
+        redir = True
     else:
-        ## ADD message
-        print('Problem in dimantion')
+        # this variable for redirection in views page
+        redir = False; 
+        messages.error(request, 'le tableau que vous insérez ne respecte pas les noms des colonnes suivantes: <br> <strong>Mat. Etudiant, Nom, Prénom, Date de naiss. , Code domaine , Code filière , Code niveau</strong> ')
+    return redir
