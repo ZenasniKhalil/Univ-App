@@ -4,9 +4,10 @@ from .models import Etudiant
 from django.contrib import messages
 from .forms import FilterForm
 from django.db.models import Q
+from .filters import EtudiantFilter
 
 def student(request):
-    filter_form = FilterForm()
+    # filter_form = FilterForm()
     table_header = ['Mat. Etudiant',
                     'Nom',
                     'Prénom',
@@ -14,48 +15,48 @@ def student(request):
                     'Code domaine',
                     'Code filière',
                     'Code niveau']
-    if request.GET.get('mat') != None:
-        mat=request.GET.get('mat')
-    else:
-        mat=''
-    if request.GET.get('nom') != None:
-        nom=request.GET.get('nom')
-    else:
-        nom=''
-    if request.GET.get('prenom') != None:
-        prenom=request.GET.get('prenom')
-    else:
-        prenom=''
-    if request.GET.get('date_de_naissance') != None:
-        date_de_naissance=request.GET.get('date_de_naissance')
-    else:
-        date_de_naissance=''
-    if request.GET.get('domaine') != None:
-        domaine=request.GET.get('domaine')
-    else:
-        domaine=''
-    if request.GET.get('filiere') != None:
-        filiere=request.GET.get('filiere')
-    else:
-        filiere=''
-    if request.GET.get('niveau') != None:
-        niveau=request.GET.get('niveau')
-    else:
-        niveau=''
-    print(date_de_naissance)
-    students = Etudiant.objects.filter(
-        mat__contains=mat,
-        nom__contains=nom,
-        prenom__contains=prenom,
-        domaine__code__contains=domaine,
-        niveau__contains=niveau,
-        date_de_naissance__contains=date_de_naissance,
-        filiere__code__contains=filiere
-    )
+    # if request.GET.get('mat') != None:
+    #     mat=request.GET.get('mat')
+    # else:
+    #     mat=''
+    # if request.GET.get('nom') != None:
+    #     nom=request.GET.get('nom')
+    # else:
+    #     nom=''
+    # if request.GET.get('prenom') != None:
+    #     prenom=request.GET.get('prenom')
+    # else:
+    #     prenom=''
+    # if request.GET.get('date_de_naissance') != None:
+    #     date_de_naissance=request.GET.get('date_de_naissance')
+    # else:
+    #     date_de_naissance=''
+    # if request.GET.get('domaine') != None:
+    #     domaine=request.GET.get('domaine')
+    # else:
+    #     domaine=''
+    # if request.GET.get('filiere') != None:
+    #     filiere=request.GET.get('filiere')
+    # else:
+    #     filiere=''
+    # if request.GET.get('niveau') != None:
+    #     niveau=request.GET.get('niveau')
+    # else:
+    #     niveau=''
+    # print(date_de_naissance)
+    # students = Etudiant.objects.filter(
+    #     mat__contains=mat,
+    #     nom__contains=nom,
+    #     prenom__contains=prenom,
+    #     domaine__code__contains=domaine,
+    #     niveau__contains=niveau,
+    #     date_de_naissance__contains=date_de_naissance,
+    #     filiere__code__contains=filiere
+    # )
+    students = EtudiantFilter(request.GET, queryset=Etudiant.objects.all())
     context = {
         'students':students,
         'header':table_header,
-        'filter_form':filter_form,
     }
     return render(request, 'base/student.html',context)
 

@@ -1,4 +1,8 @@
-{% extends 'index.html' %} {% block heading %}
+{% extends 'index.html' %}
+<!-- Loading Widget -->
+{% load widget_tweaks %}
+<!-- Heading -->
+{% block heading %}
 <style>
   #filter-btn {
     margin: 10px 0px;
@@ -14,6 +18,68 @@
   </a>
 </div>
 {% endblock %} {% block content %}
+
+<div class="card mb-4">
+  <center>
+    <div class="card-header">Filter</div>
+  </center>
+  <div class="card-body">
+    <form action="" method="get">
+      <div class="row">
+        <div class="col">
+          <label for="">Matricule:</label>
+          {% render_field students.form.mat class+="form-control" %}
+        </div>
+        <div class="col">
+          <label for="">Nom:</label>
+          {% render_field students.form.nom class+="form-control" %}
+        </div>
+        <div class="col">
+          <label for="">Prénom:</label>
+          {% render_field students.form.prenom class+="form-control" %}
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col">
+          <label for="">Domaine:</label>
+          {% render_field students.form.domaine class+="form-control" %}
+        </div>
+        <div class="col">
+          <label for="">Filière:</label>
+          {% render_field students.form.filiere class+="form-control" %}
+        </div>
+        <div class="col">
+          <label for="">Niveau:</label>
+          {% render_field students.form.niveau class+="form-control" %}
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col">
+          <label for="">L'année De Naissance:</label>
+          {% render_field students.form.year class+="form-control" %}
+        </div>
+        <div class="col">
+          <label for="">Le Mois De Naissance:</label>
+          {% render_field students.form.month class+="form-control" %}
+        </div>
+        <div class="col">
+          <label for="">Le Jour De Naissance:</label>
+          {% render_field students.form.day class+="form-control" %}
+        </div>
+      </div>
+      <br />
+      <center>
+        <input type="submit" value="Filtrer" class="btn btn-info" />
+        <a href="{% url 'base:student' %}" class="btn btn-warning"
+          >Annuler le Filtre</a
+        >
+      </center>
+    </form>
+  </div>
+</div>
+
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <center>
@@ -22,13 +88,13 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      {% if not students %}
+      {% if not students.qs %}
       <center>
         <h1>Aucun étudiant</h1>
       </center>
       {% else %}
 
-      <div class="card mb-4">
+      <!-- <div class="card mb-4">
         <center>
           <div class="card-header">Filter</div>
         </center>
@@ -85,7 +151,7 @@
             </div>
           </form>
         </div>
-      </div>
+      </div> -->
       <table
         class="table table-bordered"
         id="dataTable"
@@ -107,7 +173,7 @@
           </tr>
         </tfoot>
         <tbody>
-          {% for student in students %}
+          {% for student in students.qs %}
           <tr>
             <td>{{student.mat}}</td>
             <td>{{student.nom}}</td>
