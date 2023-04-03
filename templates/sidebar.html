@@ -37,6 +37,7 @@
       <span>Étudiants</span></a
     >
   </li> 
+  {% if not stuff %}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'base:add_student' %}">
       <i class="fas fa-fw fa-user-plus"></i>
@@ -49,6 +50,13 @@
       <span>Ajouter Domaine</span></a
     >
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'base:ajouter-filiere' %}">
+      <i class="fas fa-fw fa-school"></i>
+      <span>Ajouter Filière</span></a
+    >
+  </li>
+  {% endif %}
 
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block" />

@@ -10,12 +10,14 @@
 </style>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-6 text-gray-800 m-4">Étudiants</h1>
+  {% if admin %}
   <a href="{% url 'base:add_student' %}" class="btn btn-success btn-icon-split">
     <span class="icon text-white-50">
       <i class="fas fa-user-plus"></i>
     </span>
     <span class="text">Ajouter Étudiant</span>
   </a>
+  {% endif %}
 </div>
 {% endblock %} {% block content %}
 
