@@ -22,3 +22,5 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('', include('users.urls')),
 ]
+
+handler404 = "project.views.page_not_found_view"

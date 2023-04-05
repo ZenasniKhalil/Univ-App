@@ -19,6 +19,8 @@ def user_login(request):
             login(request, user)
             messages.success(request, 'Welcome Back !!!')
             return redirect('base:dashboard')
+        else:
+            messages.error(request, 'Votre nom d\'utilisateur ou bien votre mot de passe ne sont pas correct!')
     return render(request, 'users/user_login.html' )
 
 def user_logout(request):

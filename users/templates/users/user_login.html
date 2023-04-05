@@ -12,6 +12,25 @@ body{
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
         <div class="card bg-dark text-white" style="border-radius: 1rem; border: none;outline: none;box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);">
           <div class="card-body p-5 text-center">
+            <!--message-->
+            {% if messages %}
+            <!---->
+            {% for message in messages %}
+            <!-- #region -->
+            {% if message.tags == 'error' %}
+            <!-- #region -->
+            <div class="alert alert-danger" role="alert" id="alert">
+              {{ message|safe }}
+            </div>
+            {% endif %}
+            <!-- #region -->
+            {% endfor %}
+            <!-- #region -->
+            {% endif %}
+            <!--end message-->
+
+
+
             <form action="" method="POST">
               {% csrf_token %}
               <div class="mb-md-5 mt-md-4 pb-5">
@@ -41,20 +60,4 @@ body{
 {% endblock %}
 
 
-<!-- <center>
-    <div style="margin: 200px;">
-        <form method="POST">
-          {% csrf_token %}
-            <div class="form-group">
-              <label for="exampleInputEmail1">Username </label>
-              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter the Username" name="username">
-              <small id="emailHelp" class="form-text text-muted">We'll share your username with everybody !!!.</small>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
-            </div>
-            <input type="submit" value="Login" class="btn btn-info">
-          </form>
-    </div>
-</center> -->
+
